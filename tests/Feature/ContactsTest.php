@@ -14,8 +14,37 @@ class ContactsTest extends TestCase
     public function a_contact_can_be_added()
     {
         $this->withoutExceptionHandling();
-        $this->post('/api/contacts', ['name' => 'Test Name']);
 
-        $this->assertCount(1, Contact::all());
+        $this->post('/api/contacts', $this->data());
+
+        $contact = Contact::first();
+
+        $this->assertEquals('Test Name', $contact->name);
+        $this->assertEquals('test@email.com', $contact->email);
+        $this->assertEquals('05/14/1988', $contact->birthday);
+        $this->assertEquals('ABC String', $contact->company);
+    }
+
+    /** @test */
+    public function fields_are_required()
+    {
+        foreach(['name', 'email', 'birthday', 'company'] as $field) {
+            $response = $this->post('/api/contacts',
+                array_merge($this->data(), [$field => ''])
+            );
+
+            $response->assertSessionHasErrors($field);
+            $this->assertCount(0, Contact::all());
+        }
+    }
+
+    private function data()
+    {
+        return [
+            'name' => 'Test Name',
+            'email' => 'test@email.com',
+            'birthday' => '05/14/1988',
+            'company' => 'ABC String',
+        ];
     }
 }
