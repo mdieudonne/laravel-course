@@ -64,8 +64,16 @@ class ContactsTest extends TestCase
     /** @test */
     public function a_contact_can_be_retrieved()
     {
-        $response = $this->post('/api/contacts', $this->data());
+        $contact = Contact::factory()->create();
 
+        $response = $this->get('/api/contacts/' . $contact->id);
+
+        $response->assertJsonFragment([
+            'name' => $contact->name,
+            'email' => $contact->email,
+            'birthday' => $contact->birthday,
+            'company' => $contact->company,
+        ]);
     }
 
     private function data()
