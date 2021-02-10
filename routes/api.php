@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/contacts', [\App\Http\Controllers\ContactsController::class, 'store']);
 Route::get('/contacts/{contact}', [\App\Http\Controllers\ContactsController::class, 'show']);
 Route::put('/contacts/{contact}', [\App\Http\Controllers\ContactsController::class, 'update']);
+Route::delete('/contacts/{contact}', [\App\Http\Controllers\ContactsController::class, 'destroy']);
