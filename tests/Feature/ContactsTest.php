@@ -56,7 +56,7 @@ class ContactsTest extends TestCase
 
         $response = $this->get('/api/contacts?api_token='.$user->api_token);
         $response->assertJsonCount(1)
-            ->assertJson([['id' => $contact->id]]);
+            ->assertJson(['data' => [['contact_id' => $contact->id]]]);
     }
 
     /** @test */
@@ -118,10 +118,13 @@ class ContactsTest extends TestCase
 
         $response->assertJsonFragment(
             [
-                'name' => $contact->name,
-                'email' => $contact->email,
-                'birthday' => $contact->birthday,
-                'company' => $contact->company,
+                'data' => [
+                    'contact_id' => $contact->id,
+                    'name' => $contact->name,
+                    'email' => $contact->email,
+                    'birthday' => $contact->birthday->format('m/d/Y'),
+                    'last_updated' => $contact->updated_at->diffForHumans(),
+                ],
             ]
         );
     }
