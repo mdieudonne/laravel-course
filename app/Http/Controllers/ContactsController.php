@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Contact as ContactResource;
 use App\Models\Contact;
-use  App\Http\Resources\Contact as ContactResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactsController extends Controller
 {
@@ -17,7 +18,12 @@ class ContactsController extends Controller
     public function store()
     {
         $this->authorize('create', Contact::class);
-        request()->user()->contacts()->create($this->validateData());
+
+        $contact = request()->user()->contacts()->create($this->validateData());
+
+        return (new ContactResource($contact))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function validateData()
@@ -42,13 +48,20 @@ class ContactsController extends Controller
     public function update(Contact $contact)
     {
         $this->authorize('update', $contact);
+
         $contact->update($this->validateData());
+
+        return (new ContactResource($contact))
+            ->response()
+            ->setStatusCode(Response::HTTP_OK);
     }
 
     public function destroy(Contact $contact)
     {
         $this->authorize('delete', $contact);
         $contact->delete();
+
+        return response([], Response::HTTP_NO_CONTENT);
     }
 
 }

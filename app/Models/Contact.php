@@ -9,9 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     protected $dates = ['birthday'];
+
+    public function path()
+    {
+        return url('/contacts/'.$this->id);
+    }
 
     public function setBirthdayAttribute($birthday)
     {
