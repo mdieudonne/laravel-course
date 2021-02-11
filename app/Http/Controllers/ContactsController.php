@@ -6,6 +6,10 @@ use App\Models\Contact;
 
 class ContactsController extends Controller
 {
+    public function index()
+    {
+        return request()->user()->contacts;
+    }
 
     public function store()
     {

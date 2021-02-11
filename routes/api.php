@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group(
     function () {
+        Route::get('/contacts', [\App\Http\Controllers\ContactsController::class, 'index']);
         Route::post('/contacts', [\App\Http\Controllers\ContactsController::class, 'store']);
         Route::get('/contacts/{contact}', [\App\Http\Controllers\ContactsController::class, 'show']);
         Route::put('/contacts/{contact}', [\App\Http\Controllers\ContactsController::class, 'update']);
