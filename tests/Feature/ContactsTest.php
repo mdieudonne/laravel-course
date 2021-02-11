@@ -42,15 +42,19 @@ class ContactsTest extends TestCase
         $user = User::factory()->create();
         $anotherUser = User::factory()->create();
 
-        $contact = Contact::factory()->create([
-            'user_id' => $user->id
-        ]);
+        $contact = Contact::factory()->create(
+            [
+                'user_id' => $user->id,
+            ]
+        );
 
-        $anotherContact = Contact::factory()->create([
-            'user_id' => $anotherUser->id
-        ]);
+        $anotherContact = Contact::factory()->create(
+            [
+                'user_id' => $anotherUser->id,
+            ]
+        );
 
-        $response = $this->get('/api/contacts?api_token=' .$user->api_token);
+        $response = $this->get('/api/contacts?api_token='.$user->api_token);
         $response->assertJsonCount(1)
             ->assertJson([['id' => $contact->id]]);
     }
@@ -129,7 +133,7 @@ class ContactsTest extends TestCase
 
         $anotherUser = User::factory()->create();
 
-        $response = $this->get('/api/contacts/'.$contact->id.'?api_token=' .$anotherUser->api_token);
+        $response = $this->get('/api/contacts/'.$contact->id.'?api_token='.$anotherUser->api_token);
         $response->assertStatus(403);
     }
 
@@ -157,7 +161,8 @@ class ContactsTest extends TestCase
 
         $anotherUser = User::factory()->create();
 
-        $response = $this->put('/api/contacts/' . $contact->id,
+        $response = $this->put(
+            '/api/contacts/'.$contact->id,
             array_merge($this->data(), ['api_token' => $anotherUser->api_token])
         );
 
@@ -180,11 +185,12 @@ class ContactsTest extends TestCase
     /** @test */
     public function only_the_owner_can_delete_the_contact()
     {
-        $contact = Contact::factory()->create();
+        $contact = Contact::factory()->create(['user_id' => $this->user->id]);
 
         $anotherUser = User::factory()->create();
 
-        $response = $this->delete('/api/contacts/' . $contact->id,
+        $response = $this->delete(
+            '/api/contacts/'.$contact->id,
             ['api_token' => $anotherUser->api_token]
         );
 
