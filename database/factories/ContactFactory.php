@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContactFactory extends Factory
@@ -22,6 +23,7 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => self::factoryForModel(User::class),
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'birthday' => '05/14/1988',
