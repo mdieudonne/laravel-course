@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Contact;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -11,10 +12,31 @@ class ContactsTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+
     /** @test */
-    public function a_contact_can_be_added()
+    public function an_unauthenticated_user_should_be_redirected_to_login()
     {
-        $this->withoutExceptionHandling();
+        $response = $this->post('/api/contacts', array_merge($this->data(), ['api_token' => '']));
+
+        $response->assertRedirect('/login');
+        $this->assertCount(0, Contact::all());
+    }
+
+    private function data()
+    {
+        return [
+            'name' => 'Test Name',
+            'email' => 'test@email.com',
+            'birthday' => '05/14/1988',
+            'company' => 'ABC String',
+            'api_token' => $this->user->api_token,
+        ];
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_add_a_contact()
+    {
 
         $this->post('/api/contacts', $this->data());
 
@@ -64,11 +86,11 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function a_contact_can_be_retrieved()
+    public function an_authenticated_user_can_retrieve_a_contact()
     {
         $contact = Contact::factory()->create();
 
-        $response = $this->get('/api/contacts/'.$contact->id);
+        $response = $this->get('/api/contacts/'.$contact->id.'?api_token='.$this->user->api_token);
 
         $response->assertJsonFragment(
             [
@@ -81,7 +103,7 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function a_contact_can_be_patched()
+    public function an_authenticated_user_can_patch_a_contact()
     {
         $this->withoutExceptionHandling();
         $contact = Contact::factory()->create();
@@ -98,22 +120,23 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function a_contact_can_be_delected()
+    public function an_authenticated_user_can_delete_a_contact()
     {
         $contact = Contact::factory()->create();
 
-        $response = $this->delete('/api/contacts/'.$contact->id);
+        $response = $this->delete(
+            '/api/contacts/'.$contact->id,
+            ['api_token' => $this->user->api_token]
+        );
 
         $this->assertCount(0, Contact::all());
     }
 
-    private function data()
+    protected function setUp(): void
     {
-        return [
-            'name' => 'Test Name',
-            'email' => 'test@email.com',
-            'birthday' => '05/14/1988',
-            'company' => 'ABC String',
-        ];
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+
     }
 }
