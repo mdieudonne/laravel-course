@@ -3,7 +3,7 @@
         <div class="flex">
             <div class="pl-6 bg-gray-200 w-48 h-screen border-r-2 border-gray-400">
                 <nav class="pt-4">
-                    <router-link to="/">
+                    <router-link :to="{name: 'ContactsList'}">
                         <svg class="fill-current text-sm text-blue-600 w-12" xmlns="http://www.w3.org/2000/svg"
                              viewBox="0 0 24 24">
                             <path
@@ -22,7 +22,8 @@
                     </router-link>
 
                     <p class="pt-12 text-gray-500  text-xs uppercase font-bold">General</p>
-                    <router-link to="/" class="flex items-center py-2 hover:text-blue-600 text-sm">
+                    <router-link :to="{name: 'ContactsList'}"
+                                 class="flex items-center py-2 hover:text-blue-600 text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                              class="fill-current text-blue-600 w-5 h-5">
                             <path class="st0"

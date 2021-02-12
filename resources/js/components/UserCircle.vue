@@ -13,7 +13,8 @@ export default {
     ],
     computed: {
         userCircle() {
-            return this.name.match(/[A-Z]/g).slice(0, 2).join('');
+            const name = this.name.charAt(0).toUpperCase() + this.name.slice(1);
+            return name.match(/[A-Z]/g).slice(0, 2).join('');
         }
     }
 }

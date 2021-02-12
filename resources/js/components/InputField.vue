@@ -18,6 +18,7 @@ export default {
         'label',
         'placeholder',
         'errors',
+        'data',
     ],
     data: () => {
         return {
@@ -27,6 +28,11 @@ export default {
     computed: {
         hasError() {
             return this.errors && this.errors[this.name]?.length > 0
+        }
+    },
+    watch: {
+        data(val) {
+            this.value = val
         }
     },
     methods: {

@@ -3,7 +3,7 @@
         <div v-if="loading">Loading...</div>
         <div v-else>
             <div class="flex justify-between">
-                <div class="text-blue-400">
+                <div href="#" class="text-blue-400" @click="$router.back()">
                     < Back
                 </div>
                 <div class="relative">
