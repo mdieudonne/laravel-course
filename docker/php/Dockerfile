@@ -4,7 +4,8 @@ RUN apk add --update \
     make \
     curl \
     nodejs \
-    yarn
+    yarn \
+    npm
 
 RUN docker-php-ext-install pdo pdo_mysql
 
