@@ -4,3 +4,23 @@ Original [course](https://www.udemy.com/course/laravel-api-development-vue-js-sp
 ): Laravel 5.8
 
 Code: Laravel 8.12
+
+##Useful commands:
+
+### bash
+`docker-compose exec php /bin/sh`
+
+### permission denied
+`chown -R www-data:www-data ./`
+
+### cache
+`php artisan config:cache`
+
+`php artisan cache:clear`
+
+`php artisan route:cache`
+
+### database
+`php artisan migrate`
+
+
