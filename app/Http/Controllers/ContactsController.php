@@ -4,31 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Contact as ContactResource;
 use App\Models\Contact;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContactsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Contact::class);
 
-        return ContactResource::collection(request()->user()->contacts);
+        return ContactResource::collection($request->user()->contacts);
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $this->authorize('create', Contact::class);
 
-        $contact = request()->user()->contacts()->create($this->validateData());
+        $contact = $request->user()->contacts()->create($this->validateData($request));
 
         return (new ContactResource($contact))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function validateData()
+    public function validateData(Request $request)
     {
-        return request()->validate(
+        return $request->validate(
             [
                 'name' => 'required',
                 'email' => 'required|email',
@@ -45,11 +46,11 @@ class ContactsController extends Controller
         return new ContactResource($contact);
     }
 
-    public function update(Contact $contact)
+    public function update(Request $request, Contact $contact)
     {
         $this->authorize('update', $contact);
 
-        $contact->update($this->validateData());
+        $contact->update($this->validateData($request));
 
         return (new ContactResource($contact))
             ->response()

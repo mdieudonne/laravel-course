@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group(
     function () {
-        Route::get('/contacts', [\App\Http\Controllers\ContactsController::class, 'index']);
-        Route::post('/contacts', [\App\Http\Controllers\ContactsController::class, 'store']);
-        Route::get('/contacts/{contact}', [\App\Http\Controllers\ContactsController::class, 'show']);
-        Route::put('/contacts/{contact}', [\App\Http\Controllers\ContactsController::class, 'update']);
-        Route::delete('/contacts/{contact}', [\App\Http\Controllers\ContactsController::class, 'destroy']);
+        Route::get('/contacts', [ContactsController::class, 'index']);
+        Route::post('/contacts', [ContactsController::class, 'store']);
+        Route::get('/contacts/{contact}', [ContactsController::class, 'show']);
+        Route::put('/contacts/{contact}', [ContactsController::class, 'update']);
+        Route::delete('/contacts/{contact}', [ContactsController::class, 'destroy']);
     }
 );
