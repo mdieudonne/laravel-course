@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="">
             <input-field name="name" label="Contact Name" placeholder="Contact Name" :errors="errors"
                          @update:field="form.name = $event"/>
             <input-field name="email" label="Contact Email" placeholder="Contact Email" :errors="errors"

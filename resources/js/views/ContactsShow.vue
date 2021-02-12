@@ -72,7 +72,7 @@ export default {
             this.loading = false
 
             if (e.response.status === 404) {
-                this.$router.push({name: 'ContactsList'})
+                this.$router.push({name: 'ContactsIndex'})
             }
         }
     },
@@ -80,7 +80,7 @@ export default {
         async destroy() {
             try {
                 await axios.delete('/api/contacts/' + this.id)
-                this.$router.push({name: 'ContactsList'})
+                this.$router.push({name: 'ContactsIndex'})
             } catch (e) {
                 alert('Internal Error. Unable to delete contact.')
             }

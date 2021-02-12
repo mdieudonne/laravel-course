@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import UserCircle from "../components/UserCircle";
-
+import UserCircle from "./UserCircle";
 export default {
     name: "ContactsList",
     components: {UserCircle},
@@ -35,10 +34,13 @@ export default {
             contacts: null,
         }
     },
+    props: [
+      'endpoint'
+    ],
 
     async mounted() {
         try {
-            const response = await axios.get('api/contacts')
+            const response = await axios.get(this.endpoint)
             this.contacts = response.data.data
             this.loading = false
         } catch (e) {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BirthdaysController;
 use App\Http\Controllers\ContactsController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +22,7 @@ Route::middleware('auth:api')->group(
         Route::get('/contacts/{contact}', [ContactsController::class, 'show']);
         Route::put('/contacts/{contact}', [ContactsController::class, 'update']);
         Route::delete('/contacts/{contact}', [ContactsController::class, 'destroy']);
+
+        Route::get('/birthdays', [BirthdaysController::class, 'index']);
     }
 );

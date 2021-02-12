@@ -55,7 +55,7 @@ export default {
             this.loading = false
 
             if (e.response.status === 404) {
-                this.$router.push({name: 'ContactsList'})
+                this.$router.push({name: 'ContactsIndex'})
             }
         }
     },
