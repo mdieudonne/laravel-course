@@ -21,6 +21,7 @@ class Contact extends JsonResource
                 'contact_id' => $this->id,
                 'name' => $this->name,
                 'email' => $this->email,
+                'company' => $this->company,
                 'birthday' => $this->birthday->format('m/d/Y'),
                 'last_updated' => $this->updated_at->diffForHumans(),
             ],
