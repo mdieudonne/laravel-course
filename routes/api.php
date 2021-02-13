@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BirthdaysController;
 use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +25,7 @@ Route::middleware('auth:api')->group(
         Route::delete('/contacts/{contact}', [ContactsController::class, 'destroy']);
 
         Route::get('/birthdays', [BirthdaysController::class, 'index']);
+
+        Route::post('/search', [SearchController::class, 'index']);
     }
 );
