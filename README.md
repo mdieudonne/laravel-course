@@ -23,4 +23,5 @@ Code: Laravel 8.12
 ### database
 `php artisan migrate`
 
-
+### search
+`php artisan scout:import \\App\\Models\\Contact`
