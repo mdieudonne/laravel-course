@@ -54,7 +54,7 @@
             </div>
             <div class="flex flex-col flex-1 h-screen overflow-y-hidden">
                 <div class="h-16 px-6 border-b border-gray-400 flex items-center justify-between">
-                    <div>Contacts</div>
+                    <div>{{ title }}</div>
                     <div class="flex items-center">
                         <search-bar/>
                         <user-circle :name="user.name"/>
@@ -76,10 +76,17 @@ import SearchBar from "./SearchBar";
 export default {
     name: "App",
     components: {SearchBar, UserCircle},
+    data: () => {
+        return {
+            title: '',
+        }
+    },
     props: [
         'user',
     ],
     created() {
+        this.title = this.$route.meta.title
+
         axios.interceptors.request.use(
             config => {
                 if (config.method === 'get') {
@@ -93,6 +100,15 @@ export default {
                 return config
             }
         )
+    },
+
+    watch: {
+        $route(to, from) {
+            this.title = to.meta.title
+        },
+        title() {
+            document.title = this.title + ' | Jot - The SAP App'
+        }
     }
 }
 </script>

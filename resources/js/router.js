@@ -11,13 +11,30 @@ Vue.use(VueRouter)
 
 export default new VueRouter({
     routes: [
-        {path: '/', component: ExampleComponent},
-        {path: '/contacts', name: 'ContactsIndex', component: ContactsIndex},
-        {path: '/contacts/create', name: 'ContactsCreate', component: ContactsCreate},
-        {path: '/contacts/:id', props: true, name: 'ContactsShow', component: ContactsShow},
-        {path: '/contacts/:id/edit', props: true, name: 'ContactsEdit', component: ContactsEdit},
-
-        {path: '/birthdays', props: true, name: 'BirthdaysIndex', component: BirthdaysIndex},
+        {
+            path: '/', component: ExampleComponent,
+            meta: {title: 'Welcome'}
+        },
+        {
+            path: '/contacts', name: 'ContactsIndex', component: ContactsIndex,
+            meta: {title: 'Contacts'}
+        },
+        {
+            path: '/contacts/create', name: 'ContactsCreate', component: ContactsCreate,
+            meta: {title: 'Add New Contact'}
+        },
+        {
+            path: '/contacts/:id', props: true, name: 'ContactsShow', component: ContactsShow,
+            meta: {title: 'Detail for Contact'}
+        },
+        {
+            path: '/contacts/:id/edit', props: true, name: 'ContactsEdit', component: ContactsEdit,
+            meta: {title: 'Edit Contact'}
+        },
+        {
+            path: '/birthdays', props: true, name: 'BirthdaysIndex', component: BirthdaysIndex,
+            meta: {title: 'This Month\'s Birthdays'}
+        },
     ],
     mode: 'history',
 })
